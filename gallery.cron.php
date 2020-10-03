@@ -3,7 +3,7 @@
 if (!empty($_SERVER['REMOTE_ADDR']) && $_GET['pw'] != $CONF['cron_password'])
 	die();
 
-        chdir(__DIR__);
+chdir(__DIR__);
 
 include "includes/database.php";
 include "includes/mysql-config.inc.php";
@@ -41,6 +41,7 @@ switch (rand(1,20)) {
 if (empty($rows) && rand(1,5) > 1)
 	exit;
 
+if (!empty($rows))
 foreach ($rows as $row) {
 	if (preg_match('/geograph\.org\.uk\/photo\/(\d+)$/',$row['url'],$m)) {
 
@@ -102,11 +103,7 @@ queryExecute("UPDATE `gallery_log` SET `final` = 0 WHERE final > 0");
 queryExecute("UPDATE `gallery_log`,vote_final SET gallery_log.final = 1 WHERE `gallery_log`.vote_id = vote_final.vote_id");
 
 
-##  queryExecute("UPDATE `gallery_log` SET `final` = 2 WHERE ipaddr = 1452896083 AND final = 1);
-
-
 $avg = getOne("SELECT AVG(vote) FROM gallery_log WHERE vote > 0 AND final = 1");
-
 
 
 $wm = 1; #minimum votes required to be listed (//todo if change need to add a having to clause below!)
