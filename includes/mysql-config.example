@@ -12,6 +12,9 @@ mysql_select_db($db_name, $db);
 
 $CONF = array();
 
+$CONF['cdn_url'] = ''; //use empty string, if dont have a cdn
+//$CONF['cdn_url'] = "https://cdn.site.com/showcase/"; # folder URL with trailling slash, https:// highly rcommended. 
+
 $CONF['cron_password'] = "change-this!";
 
 $CONF['maps_api_key'] = "you-need-to-get-a-key";

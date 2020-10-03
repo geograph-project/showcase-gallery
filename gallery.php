@@ -261,7 +261,7 @@ $(function() {
 		load_feed("gallery.json.php?tab=<? echo $tab; ?>");
 	} else {
 		//this would COULD be loaded via a cachign CDN...
-		load_feed("gallery.json.php?tab=<? echo "$tab&r=$r"; if (empty($_GET['tab'])) { echo "&today=1"; } ?>&callback=?");
+		load_feed("<? echo $CONF['cdn_url']; ?>gallery.json.php?tab=<? echo "$tab&r=$r"; if (empty($_GET['tab'])) { echo "&today=1"; } ?>&callback=?");
 	}
 	if (firsttime || Math.random() > 0.96)
 		timer = setTimeout("$('#message').show()",1000);
