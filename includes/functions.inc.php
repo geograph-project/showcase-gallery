@@ -141,7 +141,7 @@ function externalLink($params)
 	global $CONF;
   	//get params and use intelligent defaults...
   	$href=str_replace(' ','+',$params['href']);
-  	if (strpos($href,'http://') !== 0)
+	if (!preg_match('/^https?:\/\//',$href) && strpos($href,'/') !== 0)
   		$href ="http://$href";
 
   	if (isset($params['text']))
@@ -159,10 +159,10 @@ function externalLink($params)
 
   	if ($params['target'] == '_blank') {
   		return "<span class=\"nowrap\"><a title=\"$title\" href=\"$href\" target=\"_blank\">$text</a>".
-  			"<img style=\"padding-left:2px;\" alt=\"External link\" title=\"External link - opens in a new window\" src=\"http://s0.geograph.org.uk/img/newwin.png\" width=\"10\" height=\"10\"/></span>";
+  			"<img style=\"padding-left:2px;\" alt=\"External link\" title=\"External link - opens in a new window\" src=\"https://s1.geograph.org.uk/img/newwin.png\" width=\"10\" height=\"10\"/></span>";
   	} else {
   		return "<span class=\"nowrap\"><a title=\"$title\" href=\"$href\">$text</a>".
-  			"<img style=\"padding-left:2px;\" alt=\"External link\" title=\"External link - shift click to open in new window\" src=\"http://s0.geograph.org.uk/img/external.png\" width=\"10\" height=\"10\"/></span>";
+  			"<img style=\"padding-left:2px;\" alt=\"External link\" title=\"External link - shift click to open in new window\" src=\"https://s1.geograph.org.uk/img/external.png\" width=\"10\" height=\"10\"/></span>";
   	}
 }
 

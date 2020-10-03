@@ -83,9 +83,9 @@ if (file_exists($cachepath) && ( @filemtime($cachepath) > time() - $rss_timeout 
 			$rss = new UniversalFeedCreator();
 			$rss->useCached($format,$cachepath,$rss_timeout);
 			$rss->title = 'Geograph Showcase';
-			$rss->link = "http://www.geograph.org/gallery.php";
+			$rss->link = "https://www.geograph.org/gallery.php";
 
-			$rss->syndicationURL = "http://www.geograph.org/gallery-syndicator.php?format=$format";
+			$rss->syndicationURL = "https://www.geograph.org/gallery-syndicator.php?format=$format";
 
 			$geoformat = ($format == 'KML' || $format == 'GeoRSS' || $format == 'GeoPhotoRSS' || $format == 'GPX');
 			$photoformat = ($format == 'KML' || $format == 'GeoPhotoRSS' || $format == 'BASE' || $format == 'MEDIA');
@@ -104,7 +104,7 @@ if (file_exists($cachepath) && ( @filemtime($cachepath) > time() - $rss_timeout 
 				}
 
 				$item->date = strtotime($row['submitted']);
-				$item->source = "http://www.geograph.org.uk".$row['profile_link'];
+				$item->source = "https://www.geograph.org.uk".$row['profile_link'];
 				$item->author = $row['realname'];
 
 				if ($geoformat) {
@@ -125,7 +125,7 @@ if (file_exists($cachepath) && ( @filemtime($cachepath) > time() - $rss_timeout 
                                 $item->descriptionHtmlSyndicated = true;
 
 
-				$item->licence = "&copy; Copyright <i class=\"attribution\">".htmlspecialchars($row['realname'])."</i> and licensed for reuse under this <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-sa/2.0/\">Creative Commons Licence</a>";
+				$item->licence = "&copy; Copyright <i class=\"attribution\">".htmlspecialchars($row['realname'])."</i> and licensed for reuse under this <a rel=\"license\" href=\"https://creativecommons.org/licenses/by-sa/2.0/\">Creative Commons Licence</a>";
 
 				$rss->addItem($item);
 			}

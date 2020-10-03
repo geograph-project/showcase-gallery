@@ -15,7 +15,7 @@ if (!empty($_GET['suggest'])) {
 	header("Content-Length: 0");
 
 	$u = array();
-	$u['url'] = "http://www.geograph.org.uk/photo/".intval($_GET['suggest']);
+	$u['url'] = "https://www.geograph.org.uk/photo/".intval($_GET['suggest']);
 	$u['created'] = 'NOW()';
 	$u['session'] = empty($_COOKIE['__utma'])?session_id():md5($_COOKIE['__utma']);
 	$sql= updates_to_insert('gallery_image',$u);
@@ -169,7 +169,7 @@ if (!empty($_GET['suggest'])) {
 	$data = getAll($sql);
 
 	if (!empty($_GET['hash'])) {
-		$row = getRow("SELECT $cols FROM gallery_image WHERE url = ".dbQuote("http:/".$_GET['hash']));
+		$row = getRow("SELECT $cols FROM gallery_image WHERE url = ".dbQuote("https:/".$_GET['hash']));
 		if ($row) {
 			if ($data) {
 				$data = array($row)+$data;

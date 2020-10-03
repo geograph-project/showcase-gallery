@@ -23,7 +23,7 @@ if (!empty($_GET['_escaped_fragment_'])) {
 	include "includes/database.php";
 	include "includes/mysql-config.inc.php";
 
-	$row = getRow("SELECT * FROM gallery_image WHERE url = ".dbQuote("http:/".$_GET['_escaped_fragment_']));
+	$row = getRow("SELECT * FROM gallery_image WHERE url = ".dbQuote("https:/".$_GET['_escaped_fragment_']));
 
 } else if ($_SERVER['HTTP_USER_AGENT'] == 'Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20110814 Firefox/6.0') { //Google plus posting bot!
 	include "includes/database.php";
@@ -327,12 +327,12 @@ function load_feed(url,append) {
 				if (images[0] && images[0].fullsize) {
 					//start it loading before the thumbs load.
 					var img = new Image();
-					img.src = images[0].fullsize.replace(/http:\/\//,'https://');
+					img.src = images[0].fullsize.replace(/https?:\/\//,'https://');
 				}
 				thumbs.empty();
 			}
 			$.each(data, function(key, item) {
-				thumbs.append('<a href="javascript:void(thumb_click('+c+'))" title="'+item.title+' by '+item.realname+'" id="thumb'+c+'"><img src="'+item.thumbnail.replace(/http:\/\//,'https://')+'"/></a>');
+				thumbs.append('<a href="javascript:void(thumb_click('+c+'))" title="'+item.title+' by '+item.realname+'" id="thumb'+c+'"><img src="'+item.thumbnail.replace(/https?:\/\//,'https://')+'"/></a>');
 				c++;
 				if (append) {
 					images.push(item);
@@ -371,22 +371,22 @@ function show_main(idx,skipscroll) {
 		date = "<span>Taken:</span> "+months[d.getMonth()]+' '+d.getDate()+', <b>'+date.substring(0,4)+'</b>';
 	}
 
-	$('#titlebar').html('<div><a href="'+item.url+'" target="_blank">'+item.title+'</a> by <a href="http://www.geograph.org.uk'+item.profile_link+'" target="_blank">'+item.realname+'</a> <small>for <a href="http://www.geograph.org.uk/gridref/'+item.grid_reference+'">'+item.grid_reference+'</a> - <a href="#" onclick="showMap(\''+item.wgs84_lat+' '+item.wgs84_long+'\');return false;">Map</a></div>');
+	$('#titlebar').html('<div><a href="'+item.url+'" target="_blank">'+item.title+'</a> by <a href="https://www.geograph.org.uk'+item.profile_link+'" target="_blank">'+item.realname+'</a> <small>for <a href="https://www.geograph.org.uk/gridref/'+item.grid_reference+'">'+item.grid_reference+'</a> - <a href="#" onclick="showMap(\''+item.wgs84_lat+' '+item.wgs84_long+'\');return false;">Map</a></div>');
 
-	$('#titlebar2').html('<div><a href="'+item.url+'" target="_blank">'+item.title+'</a><br/><div class="date">'+date+'</div> by <a href="http://www.geograph.org.uk'+item.profile_link+'" target="_blank">'+item.realname+'</a><br/> <small>for <a href="http://www.geograph.org.uk/gridref/'+item.grid_reference+'">'+item.grid_reference+'</a> <a href="#" onclick="showMap(\''+item.wgs84_lat+' '+item.wgs84_long+'\'); return false">Map</a></div>');
+	$('#titlebar2').html('<div><a href="'+item.url+'" target="_blank">'+item.title+'</a><br/><div class="date">'+date+'</div> by <a href="https://www.geograph.org.uk'+item.profile_link+'" target="_blank">'+item.realname+'</a><br/> <small>for <a href="https://www.geograph.org.uk/gridref/'+item.grid_reference+'">'+item.grid_reference+'</a> <a href="#" onclick="showMap(\''+item.wgs84_lat+' '+item.wgs84_long+'\'); return false">Map</a></div>');
 
-	$('#main').html('<div class="date">'+date+'</div><a href="'+item.url+'" title="'+item.title+' by '+item.realname+'\n\n'+item.comment+'" target="_blank"><img src="'+item.fullsize.replace(/http:\/\//,'https://')+'"/></a><br/>&copy; Copyright <a href="http://www.geograph.org.uk'+item.profile_link+'" target="_blank">'+item.realname+'</a> and licensed <span class=nowrap>for reuse under this <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">Creative Commons Licence</a></span>.');
+	$('#main').html('<div class="date">'+date+'</div><a href="'+item.url+'" title="'+item.title+' by '+item.realname+'\n\n'+item.comment+'" target="_blank"><img src="'+item.fullsize.replace(/https?:\/\//,'https://')+'"/></a><br/>&copy; Copyright <a href="https://www.geograph.org.uk'+item.profile_link+'" target="_blank">'+item.realname+'</a> and licensed <span class=nowrap>for reuse under this <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank">Creative Commons Licence</a></span>.');
 
 	$('#main').prepend('<div class="next"><a href="javascript:void(gonext())" accesskey="+">&gt;</a></div>');
 	if (current > 0)
 		$('#main').prepend('<div class="prev"><a href="javascript:void(goprev())" accesskey="-">&lt;</a></div>');
 
 	document.title = item.title;
-	window.location.hash = "!"+item.url.replace(/http:\//,'');
+	window.location.hash = "!"+item.url.replace(/https?:\//,'');
 
 	if (idx+1 < images.length) {
 		var img = new Image();
-		img.src = images[idx+1].fullsize.replace(/http:\/\//,'https://');
+		img.src = images[idx+1].fullsize.replace(/https?:\/\//,'https://');
 	}
 	current = idx;
 
@@ -495,7 +495,7 @@ function shakeup(that) {
 					</div>
 				</div>
 
-				a mini project by <a href="http://www.geograph.org/" target="_top">geograph.org</a> (<a href="#" onclick="return show_tribute()">about</a>)     &nbsp; &nbsp;
+				a mini project by <a href="https://www.geograph.org/" target="_top">geograph.org</a> (<a href="#" onclick="return show_tribute()">about</a>)     &nbsp; &nbsp;
 				<a href="javascript:void(suggest())" title="suggest new images for this gallery">suggest images</a>
 
 			</div>&nbsp; <b>Selection</b>: |
@@ -510,7 +510,7 @@ function shakeup(that) {
 			<? if (empty($_GET['crit'])) { ?>
 			<a href="?tab=nearby<? echo $extra; ?>" title="high rated images near you"<? if ($tab == 'nearby') { echo ' class="selected"'; } ?>>nearby</a> |
 			<? } ?>
-			<!--small><a href="http://www.geograph.org.uk/explore/searches.php" target="_top">more...</a></small-->
+			<!--small><a href="https://www.geograph.org.uk/explore/searches.php" target="_top">more...</a></small-->
 			<span class=nowrap>
 			<? if ($tab != 'nearby') { ?>
 			<form style="display:inline">
@@ -527,7 +527,7 @@ function shakeup(that) {
 				</select> |
 			</form>
 			<? } ?>
-			or <a href="http://www.geograph.org.uk/browser/#!/content_title=Showcase+Gallery/content_id=1/sort=score" target="_top" title="view gallery images in a interactive viewer">View in Browser</a>
+			or <a href="https://www.geograph.org.uk/browser/#!/content_title=Showcase+Gallery/content_id=1/sort=score" target="_top" title="view gallery images in a interactive viewer">View in Browser</a>
 			</span>
 		</td>
 	</tr>

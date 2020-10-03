@@ -25,7 +25,7 @@ include('includes/functions.inc.php');
 <head>
 <style>
 html {
-  background: url(http://www.geograph.org.uk/reuse.php?id=2736862&download=0c69f011&size=1024) no-repeat center center fixed;
+  background: url(https://www.geograph.org.uk/reuse.php?id=2736862&download=0c69f011&size=1024) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -60,15 +60,15 @@ tr:hover a {
 function updateBackground(id,hash) {
 	var image = new Image();
 	image.onload = function(){
-		$('html').css({'background':'url(http://www.geograph.org.uk/reuse.php?id='+id+'&download='+hash+'&size=1024) no-repeat center center fixed','background-size':'cover'});
+		$('html').css({'background':'url(https://www.geograph.org.uk/reuse.php?id='+id+'&download='+hash+'&size=1024) no-repeat center center fixed','background-size':'cover'});
 	};
-	image.src = 'http://www.geograph.org.uk/reuse.php?id='+id+'&download='+hash+'&size=1024';
+	image.src = 'https://www.geograph.org.uk/reuse.php?id='+id+'&download='+hash+'&size=1024';
 
 }
 </script>
 </head>
 <body>
-<h2>Wallpapers :: From the <a href="http://www.geograph.org.uk/gallery.php?tab=daily">Geograph gallery</a></h2>
+<h2>Wallpapers :: From the <a href="https://www.geograph.org.uk/gallery.php?tab=daily">Geograph gallery</a></h2>
 <table>
 
 <?
@@ -84,7 +84,7 @@ function updateBackground(id,hash) {
 	<td><a href="<? echo $row['url']; ?>"><? echo htmlentities($row['grid_reference']." : ".$row['title']." by ".$row['realname']); ?></a>
 	<? if (!empty($row['showday'])) { echo "<br/>{$row['showday']}"; } ?>
 	</td>
-	<td><a href="http://www.geograph.org.uk/more.php?id=<? echo basename($row['url']); ?>">wallpaper</a></td>
+	<td><a href="https://www.geograph.org.uk/more.php?id=<? echo basename($row['url']); ?>">wallpaper</a></td>
 </tr>
 <?
 

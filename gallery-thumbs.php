@@ -273,7 +273,7 @@ function listCredits() {
 						... finally we hope this stands as a tribute to everybody to has contributed in building the Geograph Archive so far. 
 					</div>
 				</div>
-				(i) a mini project by <a href="http://www.geograph.org/" target="_top">geograph.org</a>
+				(i) a mini project by <a href="https://www.geograph.org/" target="_top">geograph.org</a>
 			</div> |
 			<a href="?tab=highest<? echo $extra; ?>" title="view images rated the highest"<? if ($tab == 'highest') { echo ' class="selected"'; } ?>>highest rated</a> |
 			<a href="?tab=latest<? echo $extra; ?>" title="view latest suggested images"<? if ($tab == 'latest') { echo ' class="selected"'; } ?>>latest</a> | 

@@ -28,21 +28,19 @@ if (empty($_POST['images'])) { ?>
 
 
 	$str = trim(preg_replace('/[^\d]+/',' ',$str));
-	
+
 	$u = array();
 	$u['created'] = 'NOW()';
 	$u['session'] = empty($_COOKIE['__utma'])?session_id():md5($_COOKIE['__utma']);
-	
-	
+
 	foreach (explode(" ",$str) as $id) {
 
-		$u['url'] = "http://www.geograph.org.uk/photo/".intval($id);
+		$u['url'] = "https://www.geograph.org.uk/photo/".intval($id);
 		$sql=updates_to_insert('gallery_image',$u);
 		queryExecute($sql);
 		$count++;
 		$affected+=mysql_affected_rows();
 	}
-	
+
 	print "<hr/>COUNT= $count; AFFECTED=$affected\n";
-	
 }

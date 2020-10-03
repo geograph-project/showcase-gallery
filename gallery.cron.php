@@ -44,7 +44,7 @@ if (empty($rows) && rand(1,5) > 1)
 foreach ($rows as $row) {
 	if (preg_match('/geograph\.org\.uk\/photo\/(\d+)$/',$row['url'],$m)) {
 
-		$data = file_get_contents("http://www.geograph.org.uk/api/Photo/{$m[1]}/geograph.org?output=json");
+		$data = file_get_contents("https://www.geograph.org.uk/api/Photo/{$m[1]}/geograph.org?output=json");
 
 		if (!empty($data)) {
 			$ar = json_decode($data);
@@ -62,7 +62,7 @@ foreach ($rows as $row) {
 				$u['profile_link'] = utf8_decode($ar->profile_link);
 				$u['realname'] = utf8_decode($ar->realname);
 				$u['thumbnail'] = $ar->imgserver.$ar->thumbnail;
-				$u['fullsize'] = "http://s0.geograph.org.uk".$ar->image;
+				$u['fullsize'] = "https://s0.geograph.org.uk".$ar->image;
 				$u['taken'] = $ar->taken;
 				$u['submitted'] = "FROM_UNIXTIME(".$ar->submitted.")";
 				$u['category'] = utf8_decode($ar->category);

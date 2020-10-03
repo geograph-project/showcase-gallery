@@ -138,13 +138,13 @@ if (empty($row)) {
 	die("Unable to load image!");
 }
 
-$host = "http://www.geograph.org.uk"; //TODO - get from $row['url']
+$host = "https://www.geograph.org.uk"; //TODO - get from $row['url']
 
 
 $subject = "[Geograph Daily] ".htmlentities($row['title'])." by ".htmlentities($row['realname']);
 
-$message = "<div align=\"center\" style=\"color:silver;text-size:0.8em\">This daily newsletter brought to you by <a href=\"http://www.geograph.org/\" style=\"color:silver\">geograph.org</a>. 
-Unsubscribe from future updates by <a href=\"http://www.geograph.org/gallery-email.php?email=[EMAIL]\" style=\"color:silver\">clicking here</a>.</div>\n";
+$message = "<div align=\"center\" style=\"color:silver;text-size:0.8em\">This daily newsletter brought to you by <a href=\"https://www.geograph.org/\" style=\"color:silver\">geograph.org</a>. 
+Unsubscribe from future updates by <a href=\"https://www.geograph.org/gallery-email.php?email=[EMAIL]\" style=\"color:silver\">clicking here</a>.</div>\n";
 
 
 $html = "<body bgcolor=\"black\"><div style=\"font-family:Georgia;background-color:black;padding:10px;color:white\">";
@@ -160,7 +160,7 @@ if (!empty($row['taken']) && strpos($row['taken'],'-00') === FALSE) {
 }
 $html .= "</p>\n";
 
-$html .= "<p align=\"center\">[<a href=\"http://maps.google.co.uk/maps?q={$row['url']}.kml&ll={$row['wgs84_lat']},{$row['wgs84_long']}&z=15\">Map</a>] ";
+$html .= "<p align=\"center\">[<a href=\"https://maps.google.co.uk/maps?q={$row['url']}.kml&ll={$row['wgs84_lat']},{$row['wgs84_long']}&z=15\">Map</a>] ";
 if (!empty($row['comment'])) {
 	$html .= "<br/><small>".htmlentities($row['comment'])."</small><hr/>";
 }
@@ -169,19 +169,19 @@ $html .= "</p>\n";
 $html .= "<p align=\"center\" style=\"clear:both\"><i>Other photos you might like</i>:<small><br/><br/></small>\n";
 $rows = getAll("SELECT url,title,realname,thumbnail FROM gallery_image WHERE width > 0 AND baysian > 2.5 AND showday IS NULL ORDER BY last_vote DESC LIMIT 8");
 foreach ($rows as $row) {
-	#http://www.geograph.org/gallery.php#!/www.geograph.org.uk/photo/2391121
-	$url = "http://www.geograph.org/gallery.php#!".str_replace('http:/','',$row['url']);
+	#https://www.geograph.org/gallery.php#!/www.geograph.org.uk/photo/2391121
+	$url = "https://www.geograph.org/gallery.php#!".str_replace('https:/','',$row['url']);
 	$html .= "<a href=\"$url\" title=\"".htmlentities($row['title'])." by ".htmlentities($row['realname'])."\"><img src=\"{$row['thumbnail']}\" border=\"0\"/></a>\n ";
 }
-$html .= "<br/>If you have a moment, please go and <a href=\"http://www.geograph.org/gallery.php?tab=new\" style=\"color:white\">rate some images</a>, Thank you!</p>\n";
+$html .= "<br/>If you have a moment, please go and <a href=\"https://www.geograph.org/gallery.php?tab=new\" style=\"color:white\">rate some images</a>, Thank you!</p>\n";
 
 $html .= '<p align="center"> View:
-<a href="http://www.geograph.org/gallery.php?tab=highest" title="view images rated the highest">highest rated</a> |
-<a href="http://www.geograph.org/gallery.php?tab=latest" title="view latest suggested images" class="selected">latest</a> |
-<a href="http://www.geograph.org/gallery.php?tab=current" title="view most current images">current</a> |
-<a href="http://www.geograph.org/gallery.php?tab=unrated" title="images most in need of votes">unrated</a> |
-<a href="http://www.geograph.org/gallery.php?tab=new" title="view images not see before">new</a> |
-<a href="http://www.geograph.org/gallery.php?tab=random" title="view random images">random</a> |</p>';
+<a href="https://www.geograph.org/gallery.php?tab=highest" title="view images rated the highest">highest rated</a> |
+<a href="https://www.geograph.org/gallery.php?tab=latest" title="view latest suggested images" class="selected">latest</a> |
+<a href="https://www.geograph.org/gallery.php?tab=current" title="view most current images">current</a> |
+<a href="https://www.geograph.org/gallery.php?tab=unrated" title="images most in need of votes">unrated</a> |
+<a href="https://www.geograph.org/gallery.php?tab=new" title="view images not see before">new</a> |
+<a href="https://www.geograph.org/gallery.php?tab=random" title="view random images">random</a> |</p>';
 
 $html .= $message;
 

@@ -47,4 +47,14 @@ Decodes value from inet_aton and re-encodes with inet6_aton (which ends up as a 
 The code now uses inet6_aton when writing values.
 
 
+######################
+
+And if need to convert to https!
+
+    update gallery_image set url = replace(url,'http://','https://'), updated=updated where url like 'http://www.geograph.org.uk%';
+
+    update gallery_image set fullsize = replace(fullsize,'http://','https://'), updated=updated where fullsize like 'http://%';
+
+    update gallery_image set thumbnail = replace(thumbnail,'http://','https://'), updated=updated where thumbnail like 'http://%';
+
 
