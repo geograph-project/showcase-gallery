@@ -1,0 +1,17 @@
+<?php
+
+//die("This site is offline for maintainance. Please check back after 7pm");
+
+$db_host = 'db-master-pvt';
+$db_user = 'showcase';
+$db_passwd = 'change-this';
+$db_name = 'db1';
+
+$db = mysql_connect($db_host, $db_user, $db_passwd) or die("Sorry the site is offline right now.");
+mysql_select_db($db_name, $db);
+
+$CONF = array();
+
+$CONF['cron_password'] = "change-this!";
+
+$CONF['maps_api_key'] = "you-need-to-get-a-key";

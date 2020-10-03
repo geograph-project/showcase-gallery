@@ -1,0 +1,7 @@
+--php 
+--html 
+--js 
+--css
+--ignore-dir=_attic
+--ignore-dir=cache-service
+

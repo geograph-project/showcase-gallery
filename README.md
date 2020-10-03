@@ -15,8 +15,24 @@ The URL is subject to change, but access the live site at https://www.geograph.o
 
 Or https://www.geograph.org/gallery.php?mobile=1 on a mobile device. 
 
+###########
+
+General Requirements are a **PHP5.6** (it may work with later, but untested! Although still uses the old mysql_* client functions!) 
+
+... expects `short_open_tags = on` !
+
+Been built to run in Apache, but probably not a requirement. 
+
+In general it expects the server define the charset as "charset=ISO-8859-1" (ie to get output on Content-Type headers!!)
+
+And **Mysql 5.5+**. Although it might work with innodb as default engine, its generally designed with default engine as myiasm. 
 
 ###########
 
-More information to be added here...
+The current code is a direct dump of the code as been running on our old servers.
+
+... We are shortly going to be running the code with a MariaDB 10.4 server (but still PHP 5.6), so will be commiting code changes (if needed) 
+
+
+
 
