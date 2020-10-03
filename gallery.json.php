@@ -187,8 +187,6 @@ if (!empty($_GET['suggest'])) {
 		}
 	}
 
-	include "includes/functions.inc.php";
-
 	$contents = json_encode($data, JSON_PARTIAL_OUTPUT_ON_ERROR);
 
 	if (isset($_GET['callback'])) {
