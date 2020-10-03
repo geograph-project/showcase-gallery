@@ -1,8 +1,10 @@
 <?php
 
 function my_session_id() {
+	if (!empty($_COOKIE['PHPSESSID']))
+		return $_COOKIE['PHPSESSID'];
 	if (!empty($_COOKIE['__utma']))
-		return $id;
+		return $_COOKIE['__utma'];
 	if (!empty($_COOKIE['GALSESSID']))
 		return $_COOKIE['GALSESSID'];
 	$id = md5(uniqid('sess',true));
