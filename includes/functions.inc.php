@@ -55,6 +55,25 @@ function fetchFeed($url,$tim = 3600, $refresh = false) {
 // the functions below, generally stoled from the main Geograph project.
 //  .. see main project for copyright.
 
+function getRemoteIP()
+{
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+        {
+                $ips=explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+                $ip=trim($ips[0]);
+        }
+        else
+        {
+                $ip=$_SERVER['REMOTE_ADDR'];
+        }
+//    [HTTP_X_FORWARDED_FOR] => 2a05:d018:fcc:be01:35e0:4306:928a:97ca
+
+        if (!preg_match('/^[a-f\d]+([\.:][a-f\d]*)+$/i',$ip))
+         //we often use getRemoteIP to insert directly into database. because from HTTP_X_FORWARDED_FOR there is a chance is spoofed, and vulnerable to SQL injection (although should be ok if REALLY behind cache, as OUR proxy will set it safely.)
+                return 0;
+        return $ip;
+}
+
 
 function getGeographUrl($gridimage_id,$hash,$size = 'small') {
 	$ab=sprintf("%02d", floor(($gridimage_id%1000000)/10000));

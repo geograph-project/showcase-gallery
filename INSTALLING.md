@@ -33,3 +33,18 @@ and edit `mysql-config.inc.php` to have proper database creditials.
 
 ######################
 
+If you importing an old database that only had ipv4 support, then may need to convert existing rows, 
+Heres a useful trick. 
+
+    ALTER TABLE `showcase`.`gallery_email` MODIFY `ipaddr` varbinary(16) NOT NULL;
+    UPDATE `showcase`.`gallery_email` SET `ipaddr` = inet6_aton(inet_ntoa(`ipaddr`)), `updated` = `updated` WHERE `ipaddr` regexp binary '^[[:digit:]]+$';
+
+    ALTER TABLE `showcase`.`gallery_log` MODIFY `ipaddr` varbinary(16) NOT NULL;
+    UPDATE `showcase`.`gallery_log` SET `ipaddr` = inet6_aton(inet_ntoa(`ipaddr`)) WHERE `ipaddr` regexp binary '^[[:digit:]]+$';
+
+
+Decodes value from inet_aton and re-encodes with inet6_aton (which ends up as a binary string, not simple number!), was previousl a 'int unsigned' column, which was fine with ipv4. 
+The code now uses inet6_aton when writing values.
+
+
+

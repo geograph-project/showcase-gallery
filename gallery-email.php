@@ -66,7 +66,7 @@ if (isset($_POST['email'])) {
 	if (isset($_POST['subscribe'])) {
 	        $sql = "INSERT INTO gallery_email SET
                 	email = ".dbQuote($email = trim($_POST['email'])).",
-        	        ipaddr = INET_ATON('".$_SERVER['REMOTE_ADDR']."'),
+        	        ipaddr = INET6_ATON(".dbQuote(getRemoteIP())."),
 	                useragent = ".dbQuote($_SERVER['HTTP_USER_AGENT']).",
                 	session = ".dbQuote(empty($_COOKIE['__utma'])?session_id():md5($_COOKIE['__utma'])).",
 			created = NOW()

@@ -38,7 +38,7 @@ if (!empty($_GET['suggest'])) {
 	$sql = "INSERT INTO gallery_log SET
 		id = ".intval($id).",
 		vote = ".intval(@$_GET['v']).",
-		ipaddr = INET_ATON('".$_SERVER['REMOTE_ADDR']."'),
+		ipaddr = INET6_ATON(".dbQuote(getRemoteIP())."),
 		useragent = ".dbQuote($_SERVER['HTTP_USER_AGENT']).",
 		`tab` = ".dbQuote($_GET['tab']).",
 		session = ".dbQuote(empty($_COOKIE['__utma'])?session_id():md5($_COOKIE['__utma']));
