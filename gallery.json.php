@@ -2,13 +2,10 @@
 
 include "includes/database.php";
 include "includes/mysql-config.inc.php";
+include "includes/functions.inc.php";
 
 ####################################################
 if (!empty($_GET['suggest'])) {
-	if (empty($_COOKIE['__utma'])) {
-		session_cache_expire(3600*24*30);
-		session_start();
-	}
 
 	header("HTTP/1.0 204 No Content");
 	header("Status: 204 No Content");
@@ -17,17 +14,13 @@ if (!empty($_GET['suggest'])) {
 	$u = array();
 	$u['url'] = "https://www.geograph.org.uk/photo/".intval($_GET['suggest']);
 	$u['created'] = 'NOW()';
-	$u['session'] = empty($_COOKIE['__utma'])?session_id():md5($_COOKIE['__utma']);
+	$u['session'] = my_session_id();
 	$sql= updates_to_insert('gallery_image',$u);
 	queryExecute($sql);
 	exit;
 
 ####################################################
 } elseif (!empty($_GET['v'])) {
-	if (empty($_COOKIE['__utma'])) {
-		session_cache_expire(3600*24*30);
-		session_start();
-	}
 
 	header("HTTP/1.0 204 No Content");
 	header("Status: 204 No Content");
@@ -41,7 +34,7 @@ if (!empty($_GET['suggest'])) {
 		ipaddr = INET6_ATON(".dbQuote(getRemoteIP())."),
 		useragent = ".dbQuote($_SERVER['HTTP_USER_AGENT']).",
 		`tab` = ".dbQuote($_GET['tab']).",
-		session = ".dbQuote(empty($_COOKIE['__utma'])?session_id():md5($_COOKIE['__utma']));
+		session = ".dbQuote(my_session_id());
 
 	queryExecute($sql);
 	exit;
@@ -109,12 +102,8 @@ if (!empty($_GET['suggest'])) {
 		case 'active':  $where[] = "baysian > 3"; $order = "updated DESC"; break;
 		case 'current': $where[] = "baysian > 3"; $where[] = "taken > 1"; $order = "taken DESC,$RAND"; if ($r%2 == 0) {$reorder= true;}; break;
 		case 'new':
-			if (empty($_COOKIE['__utma'])) {
-				session_cache_expire(3600*24*30);
-				session_start();
-			}
 
-			$sessid = dbQuote(empty($_COOKIE['__utma'])?session_id():md5($_COOKIE['__utma']));
+			$sessid = dbQuote(my_session_id());
 
 			$orders = array('last_vote','submitted','created');
 			$order = $orders[$r%count($orders)];

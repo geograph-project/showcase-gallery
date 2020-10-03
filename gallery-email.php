@@ -7,6 +7,7 @@ if (!empty($argv[1]) && $argv[1] == 'send') {
 
 include "includes/database.php";
 include "includes/mysql-config.inc.php";
+include "includes/functions.inc.php";
 
 if (isset($_GET['email'])) {
 ?>
@@ -58,17 +59,12 @@ if (isset($_POST['email'])) {
 		die("emails don't match!");
 	}
 
-        if (empty($_COOKIE['__utma'])) {
-                session_cache_expire(3600*24*30);
-                session_start();
-        }
-
 	if (isset($_POST['subscribe'])) {
 	        $sql = "INSERT INTO gallery_email SET
                 	email = ".dbQuote($email = trim($_POST['email'])).",
         	        ipaddr = INET6_ATON(".dbQuote(getRemoteIP())."),
 	                useragent = ".dbQuote($_SERVER['HTTP_USER_AGENT']).",
-                	session = ".dbQuote(empty($_COOKIE['__utma'])?session_id():md5($_COOKIE['__utma'])).",
+                	session = ".dbQuote(my_session_id()).",
 			created = NOW()
 			ON DUPLICATE KEY UPDATE status = 2";
 

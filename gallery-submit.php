@@ -11,11 +11,7 @@ if (empty($_POST['images'])) { ?>
 <? } else {
 	include "includes/database.php";
 	include "includes/mysql-config.inc.php";
-
-	if (empty($_COOKIE['__utma'])) {
-		session_cache_expire(3600*24*30);
-		session_start();
-	}
+	include "includes/functions.inc.php";
 
 	$str = $_POST['images'];
 
@@ -31,7 +27,7 @@ if (empty($_POST['images'])) { ?>
 
 	$u = array();
 	$u['created'] = 'NOW()';
-	$u['session'] = empty($_COOKIE['__utma'])?session_id():md5($_COOKIE['__utma']);
+	$u['session'] = my_session_id();
 
 	foreach (explode(" ",$str) as $id) {
 

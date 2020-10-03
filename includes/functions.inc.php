@@ -1,5 +1,15 @@
 <?php
 
+function my_session_id() {
+	if (!empty($_COOKIE['__utma']))
+		return $id;
+	if (!empty($_COOKIE['GALSESSID']))
+		return $_COOKIE['GALSESSID'];
+	$id = md5(uniqid('sess',true));
+	setcookie('GALSESSID', $id, 0, false, false, true, true);
+	return $id;
+}
+
 function he($in) {
 	return  htmlentities($in);
 }
@@ -12,16 +22,6 @@ function hec($in) {
 }
 function ehec($in) {
         echo hec($in);
-}
-
-function init_session() {
-	//here just to generally only catch user sessions
-	if (empty($_SERVER['HTTPS']) && $_SERVER['REQUEST_METHOD'] == 'GET') {
-	        header("Location: https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}", true, 301);
-	        exit;
-	}
-
-	session_start();
 }
 
 function print_rp($q) {
