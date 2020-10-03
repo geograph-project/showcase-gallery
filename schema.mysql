@@ -35,7 +35,7 @@ CREATE TABLE `gallery_email` (
   `last_sent` datetime NOT NULL,
   PRIMARY KEY (`email_id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +106,7 @@ CREATE TABLE `gallery_image` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`),
   KEY `width` (`width`)
-) ENGINE=MyISAM AUTO_INCREMENT=150224 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `gallery_log` (
   `tab` varchar(10) NOT NULL,
   PRIMARY KEY (`vote_id`),
   KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=559716 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -65,14 +65,18 @@ foreach ($rows as $row) {
 				$u['fullsize'] = "https://s0.geograph.org.uk".$ar->image;
 				$u['taken'] = $ar->taken;
 				$u['submitted'] = "FROM_UNIXTIME(".$ar->submitted.")";
-				$u['category'] = utf8_decode($ar->category);
-				$u['comment'] = utf8_decode($ar->comment);
+				if (!empty($ar->category))
+					$u['category'] = utf8_decode($ar->category);
+				if (!empty($ar->comment))
+					$u['comment'] = utf8_decode($ar->comment);
 				$u['wgs84_lat'] = $ar->wgs84_lat;
 				$u['wgs84_long'] = $ar->wgs84_long;
 				$u['width'] = intval($ar->sizeinfo['0']);
 				$u['height'] = (int)$ar->sizeinfo['1'];
-				$u['width_original'] =  intval($ar->sizeinfo['4']);
-				$u['height_original'] =  intval($ar->sizeinfo['5']);
+				if (!empty($ar->sizeinfo) && !empty($ar->sizeinfo['4'])) {
+					$u['width_original'] =  intval($ar->sizeinfo['4']);
+					$u['height_original'] =  intval($ar->sizeinfo['5']);
+				}
 				$u['fetched'] = 'NOW()';
 
 				$sql= updates_to_update('gallery_image',$u,'url',$row['url']);
