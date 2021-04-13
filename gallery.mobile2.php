@@ -452,7 +452,7 @@ function vote(v) {
 }
 function showMap(geo) {
 	bits = geo.split(/ /);
-	url = "https://maps.googleapis.com/maps/api/staticmap?markers=size:med|"+bits[0]+","+bits[1]+"&zoom=7&size=200x200&maptype=terrain&key=".$CONF['maps_api_key'];
+	url = "https://maps.googleapis.com/maps/api/staticmap?markers=size:med|"+bits[0]+","+bits[1]+"&zoom=7&size=200x200&maptype=terrain&key=<? echo $CONF['maps_api_key']; ?>";
 
 	document.images['map'].src= url;
 	$("#mapdiv").toggle();
