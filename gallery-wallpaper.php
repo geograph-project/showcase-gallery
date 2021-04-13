@@ -17,9 +17,9 @@ include('includes/functions.inc.php');
 	if ($sql) {
 		include "includes/mysql-config.inc.php";
 
-		$result = mysql_query($sql) or die ("Couldn't select query : $sql " . mysql_error() . "\n");
+		$result = mysqli_query($db,$sql) or die ("Couldn't select query : $sql " . mysqli_error($db) . "\n");
 		$r = '';
-		if (mysql_num_rows($result) > 0) {
+		if (mysqli_num_rows($result) > 0) {
 ?>
 <html>
 <head>
@@ -72,7 +72,7 @@ function updateBackground(id,hash) {
 <table>
 
 <?
-			while ($row = mysql_fetch_assoc($result)) {
+			while ($row = mysqli_fetch_assoc($result)) {
 				$bits = preg_split('/[_\/\.]/',$row['thumbnail']);
 				array_pop($bits); //jpg
 				array_pop($bits); //size

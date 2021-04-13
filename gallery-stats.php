@@ -80,11 +80,12 @@ print "</div>";
 
 
 function dump_sql_table($sql_query) {
+	global $db;
 
-	$result = mysql_query($sql_query) or die ("Couldn't select : [[ $sql_query ]] " . mysql_error() . "\n");
+	$result = mysqli_query($db,$sql_query) or die ("Couldn't select : [[ $sql_query ]] " . mysqli_error($db) . "\n");
 
-	$row = mysql_fetch_array($result,MYSQL_ASSOC);
-	$num = mysql_num_rows($result);
+	$row = mysqli_fetch_assoc($result);
+	$num = mysqli_num_rows($result);
 	if (!$num)
 		return FALSE;
 
@@ -99,7 +100,7 @@ function dump_sql_table($sql_query) {
 			print "<TD>$value</TD>";
 		}
 		print "</TR>";
-	} while ($row = mysql_fetch_array($result,MYSQL_ASSOC));
+	} while ($row = mysqli_fetch_assoc($result));
 	print "</TR></TABLE>";
 	return $num;
 }

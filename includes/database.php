@@ -1,10 +1,11 @@
 <?php
 
-// General Database Functions, provides some abstraction, rather than using mysql_* fnctions directly
+// General Database Functions, provides some abstraction, rather than using mysqli_* fnctions directly
 // Created by Barry Hunter, for own use. Reused here with permission.
 
 function dbQuote($in) {
-	return "'".mysql_real_escape_string($in)."'";
+	global $db;
+	return "'".mysqli_real_escape_string($db,$in)."'";
 }
 
 function sqlMakeCountQuery(&$sql) {
@@ -59,15 +60,16 @@ function sqlMakeQuery(&$sql) {
 
 function queryExecute($query) {
 	global $db;
-	$result = mysql_query($query, $db) or print('<br>Error queryExecute: '.mysql_error());
+	$result = mysqli_query($db, $query) or print('<br>Error queryExecute: '.mysqli_error($db));
 	return $result;
 }
 
 function getOne($query) {
 	global $db;
-	$result = mysql_query($query, $db) or print("<br>Error getOne [[ $query ]] : ".mysql_error());
-	if (mysql_num_rows($result)) {
-		return mysql_result($result,0,0);
+	$result = mysqli_query($db, $query) or print("<br>Error getOne [[ $query ]] : ".mysqli_error($db));
+	if (mysqli_num_rows($result)) {
+		$row = mysqli_fetch_row($result);
+		return $row[0];
 	} else {
 		return FALSE;
 	}
@@ -75,9 +77,9 @@ function getOne($query) {
 
 function getRow($query) {
 	global $db;
-	$result = mysql_query($query, $db) or print('<br>Error getRow: '.mysql_error());
-	if (mysql_num_rows($result)) {
-		return mysql_fetch_assoc($result);
+	$result = mysqli_query($db, $query) or print('<br>Error getRow: '.mysqli_error($db));
+	if (mysqli_num_rows($result)) {
+		return mysqli_fetch_assoc($result);
 	} else {
 		return FALSE;
 	}
@@ -85,12 +87,12 @@ function getRow($query) {
 
 function getCol($query) {
 	global $db;
-	$result = mysql_query($query, $db) or print('<br>Error getColAsKeys: '.mysql_error());
-	if (!mysql_num_rows($result)) {
+	$result = mysqli_query($db, $query) or print('<br>Error getColAsKeys: '.mysqli_error($db));
+	if (!mysqli_num_rows($result)) {
 		return FALSE;
 	}
 	$a = array();
-	while($row = mysql_fetch_row($result)) {
+	while($row = mysqli_fetch_row($result)) {
 		$a[] = $row[0];
 	}
 	return $a;
@@ -98,12 +100,12 @@ function getCol($query) {
 
 function getColAsKeys($query) {
 	global $db;
-	$result = mysql_query($query, $db) or print('<br>Error getColAsKeys: '.mysql_error());
-	if (!mysql_num_rows($result)) {
+	$result = mysqli_query($db, $query) or print('<br>Error getColAsKeys: '.mysqli_error($db));
+	if (!mysqli_num_rows($result)) {
 		return FALSE;
 	}
 	$a = array();
-	while($row = mysql_fetch_row($result)) {
+	while($row = mysqli_fetch_row($result)) {
 		$a[$row[0]] = '';
 	}
 	return $a;
@@ -115,12 +117,12 @@ function getAll($query) {
 if (!empty($_GET['d']))
 	die($query);
 
-	$result = mysql_query($query, $db) or print('<br>Error getAll: '.mysql_error());
-	if (!mysql_num_rows($result)) {
+	$result = mysqli_query($db, $query) or print('<br>Error getAll: '.mysqli_error($db));
+	if (!mysqli_num_rows($result)) {
 		return FALSE;
 	}
 	$a = array();
-	while($row = mysql_fetch_assoc($result)) {
+	while($row = mysqli_fetch_assoc($result)) {
 		$a[] = $row;
 	}
 	return $a;
@@ -132,41 +134,41 @@ function getAssoc2($table,$key,$value) {
 
 function getAssoc($query) {
 	global $db;
-	$result = mysql_query($query, $db) or print('<br>Error getAssoc: '.mysql_error());
-	if (!mysql_num_rows($result)) {
+	$result = mysqli_query($db, $query) or print('<br>Error getAssoc: '.mysqli_error($db));
+	if (!mysqli_num_rows($result)) {
 		return FALSE;
 	}
 	$a = array();
-	$row = mysql_fetch_assoc($result);
+	$row = mysqli_fetch_assoc($result);
 
 	if (count($row) > 2) {
 		do {
 			$i = array_shift($row);
 			$a[$i] = $row;
-		} while($row = mysql_fetch_assoc($result));
+		} while($row = mysqli_fetch_assoc($result));
 	} else {
 		$row = array_values($row);
 		do {
 			$a[$row[0]] = $row[1];
-		} while($row = mysql_fetch_row($result));
+		} while($row = mysqli_fetch_row($result));
 	}
 	return $a;
 }
 
 function getAssoc3($query) {
 	global $db;
-	$result = mysql_query($query, $db) or print('<br>Error getAssoc: '.mysql_error());
-	if (!mysql_num_rows($result)) {
+	$result = mysqli_query($db, $query) or print('<br>Error getAssoc: '.mysqli_error($db));
+	if (!mysqli_num_rows($result)) {
 		return FALSE;
 	}
 	$a = array();
 	if (preg_match('/SELECT .*,.*,.* FROM/i',$query)) {
-		while($row = mysql_fetch_row($result)) {
+		while($row = mysqli_fetch_row($result)) {
 			$i = array_shift($row);
 			$a[$i] = $row;
 		}
 	} else {
-		while($row = mysql_fetch_row($result)) {
+		while($row = mysqli_fetch_row($result)) {
 			$a[$row[0]] = $row[1];
 		}
 	}
@@ -177,6 +179,7 @@ function getAssoc3($query) {
 ####################
 
 function updates_to_a(&$updates) {
+	global $db;
 	$a = array();
 	foreach ($updates as $key => $value) {
 		$key = str_replace('`','',$key); //ugly sql-injection protection!
@@ -192,7 +195,7 @@ function updates_to_a(&$updates) {
 			if (is_numeric($value) || preg_match('/^\w+\(\d*\)$/',$value)) {
 				$a[] = "`$key`=$value";
 			} else {
-				$a[] = "`$key`='".mysql_real_escape_string($value)."'";
+				$a[] = "`$key`='".mysqli_real_escape_string($db,$value)."'";
 			}
 		}
 	}
@@ -207,11 +210,12 @@ function updates_to_insert($table,$updates) {
 }
 
 function updates_to_update($table,$updates,$primarykey,$primaryvalue) {
+	global $db;
 	$a = updates_to_a($updates);
 	$table = str_replace('`','',$table); //ugly sql-injection protection!
 	$primarykey = str_replace('`','',$primarykey); //ugly sql-injection protection!
 	if (!is_numeric($primaryvalue)) {
-		$primaryvalue = "'".mysql_real_escape_string($primaryvalue)."'";
+		$primaryvalue = "'".mysqli_real_escape_string($db,$primaryvalue)."'";
 	}
 	return "UPDATE `$table` SET ".join(',',$a)." WHERE `$primarykey` = $primaryvalue";
 

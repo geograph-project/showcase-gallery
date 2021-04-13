@@ -3,8 +3,8 @@
 include "includes/database.php";
 include "includes/mysql-config.inc.php";
 
-mysql_query("drop table if exists gallery_ids");
-mysql_query("create table gallery_ids (primary key (`id`)) select substring_index(url,'/',-1) as id,users,showday,baysian,`avg`,fetched from gallery_image where length(title) > 2");
+mysqli_query($db,"drop table if exists gallery_ids");
+mysqli_query($db,"create table gallery_ids (primary key (`id`)) select substring_index(url,'/',-1) as id,users,showday,baysian,`avg`,fetched from gallery_image where length(title) > 2");
 
 print "# (c)".date('Y')." Geograph Project - https://creativecommons.org/licenses/by-sa/2.0/\n";
 

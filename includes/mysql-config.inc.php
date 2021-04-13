@@ -18,8 +18,7 @@ $db_user = $_SERVER['SHOWCASE_USER'];
 $db_passwd = $_SERVER['SHOWCASE_PASSWORD'];
 $db_name = $_SERVER['SHOWCASE_USER'];
 
-$db = mysql_connect($db_host, $db_user, $db_passwd) or die("Sorry the site is offline right now.");
-mysql_select_db($db_name, $db);
+$db = mysqli_connect($db_host, $db_user, $db_passwd, $db_name) or die("Sorry the site is offline right now.");
 
 $CONF = array();
 

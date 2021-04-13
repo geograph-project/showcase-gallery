@@ -35,7 +35,7 @@ if (empty($_POST['images'])) { ?>
 		$sql=updates_to_insert('gallery_image',$u);
 		queryExecute($sql);
 		$count++;
-		$affected+=mysql_affected_rows();
+		$affected+=mysqli_affected_rows($db);
 	}
 
 	print "<hr/>COUNT= $count; AFFECTED=$affected\n";

@@ -75,9 +75,9 @@ if (file_exists($cachepath) && ( @filemtime($cachepath) > time() - $rss_timeout 
 	if ($sql) {
 		include "includes/mysql-config.inc.php";
 
-		$result = mysql_query($sql) or die ("Couldn't select query : $sql " . mysql_error() . "\n");
+		$result = mysqli_query($db,$sql) or die ("Couldn't select query : $sql " . mysqli_error($db) . "\n");
 		$r = '';
-		if (mysql_num_rows($result) > 0) {
+		if (mysqli_num_rows($result) > 0) {
 			require ("includes/feedcreator.class.php");
 
 			$rss = new UniversalFeedCreator();
@@ -90,7 +90,7 @@ if (file_exists($cachepath) && ( @filemtime($cachepath) > time() - $rss_timeout 
 			$geoformat = ($format == 'KML' || $format == 'GeoRSS' || $format == 'GeoPhotoRSS' || $format == 'GPX');
 			$photoformat = ($format == 'KML' || $format == 'GeoPhotoRSS' || $format == 'BASE' || $format == 'MEDIA');
 
-			while ($row = mysql_fetch_assoc($result)) {
+			while ($row = mysqli_fetch_assoc($result)) {
 
 				$item = new FeedItem();
 				$item->guid = $row['url'];
