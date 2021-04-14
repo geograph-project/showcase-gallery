@@ -203,9 +203,9 @@ if (isset($_GET['send']) && $_GET['pw'] == $CONF['cron_password']) {
 	}
 
 	foreach ($emails as $email) {
-		$hash = substr(md5('This is a unknown secret'.$email),4,12);
+		$hash = substr(hash_hmac('md5', $email, $CONF['cron_password']),4,12);
 
-		mail($email, $subject, str_replace('[EMAIL]',urlencode($email)."&h=".$hash,$html), $headers);
+		mail_wrapper($email, $subject, str_replace('[EMAIL]',urlencode($email)."&h=".$hash,$html), $headers);
 		print "<br/>email sent to ".htmlentities($email);
 		if (count($emails) > 2) {
 			sleep(rand(30,60));

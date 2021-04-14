@@ -334,3 +334,77 @@ function MakeLinks($posterText) {
 }
 
 
+function mail_wrapper($email, $subject, $body, $headers = '', $param = '', $debug = false) {
+
+	if (!empty($_SERVER['CONF_SMTP_HOST'])) {
+		require_once "3rdparty/class.phpmailer.php";
+		require_once "3rdparty/class.smtp.php";
+
+		$mail = new PHPMailer;
+
+		#########################
+		if ($debug)
+			$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+		$mail->XMailer = 'x'; //used to SKIP the header
+
+		$mail->isSMTP();
+		$mail->Host = $_SERVER['CONF_SMTP_HOST'];
+		if (!empty($_SERVER['CONF_SMTP_USER'])) {
+			$mail->SMTPAuth = true;
+			$mail->Username = $_SERVER['CONF_SMTP_USER'];
+			$mail->Password = $_SERVER['CONF_SMTP_PASS'];
+		}
+		if ($_SERVER['CONF_SMTP_PORT']> 25)
+			$mail->SMTPSecure = 'tls';                    // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = $_SERVER['CONF_SMTP_PORT'];                     // TCP port to connect to
+
+		#########################
+
+		$mail->setFrom($_SERVER['CONF_SMTP_FROM'],'',true);//set sender too
+
+		#########################
+		// parse the general headers from request
+
+		if ($headers) {
+			if (is_array($headers))
+				$headers = implode("\n", $headers);
+
+			//basic header parser
+
+			if (preg_match('/Received:(.*)/',$headers, $m)) {
+                                $mail->addCustomHeader('Received',trim($m[1]));
+                        }
+
+			if (preg_match('/From:(.*)<(.*)>/',$headers, $m)) { //no DOTALL, so shouldnt match mutliline!
+				//$mail->setFrom('from@example.com', 'Mailer');
+				$mail->setFrom(trim($m[2]), trim($m[1]));
+			} elseif (preg_match('/From:(.*)/',$headers, $m)) {
+                                $mail->setFrom(trim($m[1]));
+                        }
+
+			if (preg_match('/Reply-To:(.*)<(.*)>/',$headers, $m)) {
+				$mail->addReplyTo(trim($m[2]), trim($m[1]));
+			} elseif (preg_match('/Reply-To:(.*)/',$headers, $m)) {
+                                $mail->addReplyTo(trim($m[1]));
+                        }
+
+			if (preg_match('/Sender:(.*)/',$headers, $m)) {
+                                $mail->Sender = trim($m[1]);
+                        }
+                }
+
+		if (preg_match('/(.*)<(.*)>/',$email, $m)) {
+			$mail->addAddress(trim($m[2]), trim($m[1]));
+		} else
+			$mail->addAddress($email);
+
+		$mail->Subject = $subject;
+		$mail->Body = $body; //if using isHTML will be the HTML verson, AltBody, will be plain text!
+
+		return $mail->send();
+	} else {
+		return mail($email, $subject, $body, $headers, $param);
+	}
+}
+
