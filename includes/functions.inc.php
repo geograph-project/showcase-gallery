@@ -313,14 +313,20 @@ function htmlentities2( $myHTML,$quotes = ENT_COMPAT,$char_set = 'ISO-8859-1')
 }
 
 function htmlnumericentities($myXML){
-	return str_replace('&#38;amp;','&amp;',preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', htmlspecialchars($myXML)));
+        return str_replace('&#38;amp;','&#38;', preg_replace_callback('/[^!-%\x27-;=?-~ ]/',
+               function($m) { return '&#'.ord($m[0]).';'; },
+               htmlspecialchars($myXML)));
 }
 
 
 function MakeLinks($posterText) {
-	$posterText = preg_replace('/(?<!["\'>F=])(https?:\/\/[\w\.-]+\.\w{2,}\/?[\w\~\-\.\?\,=\'\/\\\+&%\$#\(\)\;\:]*)(?<!\.)(?!["\'])/e',"externalLink(array('href'=>\"\$1\",'text'=>\"\$1\",'nofollow'=>1,'title'=>\"\$1\"))",$posterText);
+        $posterText = preg_replace_callback('/(?<!["\'>F=])(https?:\/\/[\w\.-]+\.\w{2,}\/?[\w\~\-\.\?\,=\'\/\\\+&%\$#\(\)\;\:\@\!]*)(?<!\.)(?!["\'])/', function($m) {
+                return externalLink(array('href'=>$m[1],'text'=>'Link','nofollow'=>1,'title'=>$m[1]));
+        }, $posterText);
 
-	$posterText = preg_replace('/(?<![\/F\.])(www\.[\w\.-]+\.\w{2,}\/?[\w\~\-\.\?\,=\'\/\\\+&%\$#\(\)\;\:]*)(?<!\.)(?!["\'])/e',"externalLink(array('href'=>\"http://\$1\",'text'=>\"\$1\",'nofollow'=>1,'title'=>\"\$1\"))",$posterText);
+        $posterText = preg_replace_callback('/(?<![>\/F\.])(www\.[\w\.-]+\.\w{2,}\/?[\w\~\-\.\?\,=\'\/\\\+&%\$#\(\)\;\:\@\!]*)(?<!\.)(?!["\'])/', function($m) {
+                return externalLink(array('href'=>"http://".$m[1],'text'=>'Link','nofollow'=>1,'title'=>$m[1]));
+        }, $posterText);
 
 	$posterText = str_replace("/\n\n\n/",'<br/><br/>',$posterText);
 
