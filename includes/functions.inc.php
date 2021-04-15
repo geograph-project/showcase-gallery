@@ -392,6 +392,14 @@ function mail_wrapper($email, $subject, $body, $headers = '', $param = '', $debu
 			if (preg_match('/Sender:(.*)/',$headers, $m)) {
                                 $mail->Sender = trim($m[1]);
                         }
+
+			//$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+			if (preg_match('/Content-Type:([^;]+)/',$headers, $m)) {
+				//could use isHtml, but might as well just set content type directly. 
+				$mail->ContentType = trim($m[1]);
+				//$mail->CharSet = ... charset goes in seperate variable, ignore for now
+			}
+
                 }
 
 		if (preg_match('/(.*)<(.*)>/',$email, $m)) {
