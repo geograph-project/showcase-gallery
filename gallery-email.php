@@ -69,6 +69,7 @@ if (isset($_POST['email'])) {
 			ON DUPLICATE KEY UPDATE status = 2";
 
 		$_GET['send'] = 1;
+		$_GET['pw'] = $CONF['cron_password'];
 	} else {
 		$sql = "UPDATE gallery_email SET status = -1 WHERE email = ".dbQuote(trim($_POST['email']));
 	}
