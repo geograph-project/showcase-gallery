@@ -7,6 +7,8 @@ print "<div style='float:left;width:260px'>";
 
 if (!empty($_GET['i']))
 	$where = 'and length(grid_reference)=5';
+else
+	$where = '';
 
 
 	print "<h3>Total images = ".getOne("SELECT COUNT(*) FROM gallery_image WHERE width>0 $where")."</h3>";
