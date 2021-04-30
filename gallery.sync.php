@@ -30,7 +30,7 @@
 
 		queryExecute($sql);
 		$count++;
-		$affected+=mysql_affected_rows();
+		$affected+=mysqli_affected_rows($db);
 	}
 
 	if (posix_isatty(STDOUT))
