@@ -1,13 +1,13 @@
 <?php
 
+chdir(__DIR__);
+
+include "includes/mysql-config.inc.php";
+
 if (!empty($_SERVER['REMOTE_ADDR']) && $_GET['pw'] != $CONF['cron_password'])
 	die();
 
-chdir(__DIR__);
-
 include "includes/database.php";
-include "includes/mysql-config.inc.php";
-
 include "includes/functions.inc.php";
 
 switch (rand(1,20)) {

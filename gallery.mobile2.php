@@ -17,17 +17,15 @@ $extra = '&mobile=1';
 		$extra .= "&crit=".$m[1].":".$m[2];
         }
 
+//need to load the config file always
+include "includes/mysql-config.inc.php";
 
 if (!empty($_GET['_escaped_fragment_'])) {
-
 	include "includes/database.php";
-	include "includes/mysql-config.inc.php";
-
 	$row = getRow("SELECT * FROM gallery_image WHERE url = ".dbQuote("https:/".$_GET['_escaped_fragment_']));
 
 } else if ($_SERVER['HTTP_USER_AGENT'] == 'Mozilla/5.0 (Windows NT 6.1; rv:6.0) Gecko/20110814 Firefox/6.0') { //Google plus posting bot!
 	include "includes/database.php";
-	include "includes/mysql-config.inc.php";
 	$row = getRow("SELECT * FROM gallery_image WHERE width > 0 AND num > 4 ORDER BY baysian DESC LIMIT 1");
 }
 
