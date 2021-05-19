@@ -337,8 +337,8 @@ function MakeLinks($posterText) {
 function mail_wrapper($email, $subject, $body, $headers = '', $param = '', $debug = false) {
 
 	if (!empty($_SERVER['CONF_SMTP_HOST'])) {
-		require_once "3rdparty/class.phpmailer.php";
-		require_once "3rdparty/class.smtp.php";
+		require_once __DIR__."/class.phpmailer.php";
+		require_once __DIR__."/class.smtp.php";
 
 		$mail = new PHPMailer;
 
