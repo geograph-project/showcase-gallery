@@ -62,7 +62,7 @@ print "<div style='float:left;width:260px'>";
 
 	print "<hr/><h3>Images by number of votes</h3>";
 
-	dump_sql_table("SELECT num,COUNT(*),AVG(baysian) FROM gallery_image WHERE width>0 $where GROUP BY floor(ln(num)*10)");
+	dump_sql_table("SELECT num,COUNT(*),ROUND(AVG(baysian),4) AS `AVG(baysian)` FROM gallery_image WHERE width>0 $where GROUP BY floor(ln(num)*10)");
 
 print "</div>";
 print "<div style='float:left;width:260px'>";
