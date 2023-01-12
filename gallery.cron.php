@@ -41,6 +41,8 @@ switch (rand(1,20)) {
 if (empty($rows) && rand(1,5) > 1)
 	exit;
 
+ini_set('user_agent', 'Geograph ShowCase Bot +https://www.geograph.org.uk/contact.php');
+
 if (!empty($rows))
 foreach ($rows as $row) {
 	if (preg_match('/geograph\.org\.uk\/photo\/(\d+)$/',$row['url'],$m)) {
