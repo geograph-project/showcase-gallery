@@ -532,7 +532,7 @@ function shakeup(that) {
 						$r = getRow("select hectad,date(now()) as day_hectad from (
 								select count(*) images,CONCAT(SUBSTRING(gi.grid_reference,1,LENGTH(gi.grid_reference)-3),SUBSTRING(gi.grid_reference,LENGTH(gi.grid_reference)-1,1)) AS hectad
 								from gallery_image gi where width > 0  and profile_link not in ('/profile/34609','/profile/38492')
-								group by hectad order by images desc limit 200
+								group by hectad order by images desc limit 400
 								) t2 left join gallery_hectad using (hectad) where day_hectad is null order by rand() limit 1");
 						if ($r['hectad']) {
 							$sql = "insert into gallery_hectad values('".implode("','",$r)."')";
