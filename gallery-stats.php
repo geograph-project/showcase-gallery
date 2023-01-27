@@ -10,10 +10,11 @@ if (!empty($_GET['i']))
 else
 	$where = '';
 
+	print "<h3>Pending images = ".getOne("SELECT COUNT(*) FROM gallery_image WHERE width=0 $where")."</h3>";
 
 	print "<h3>Total images = ".getOne("SELECT COUNT(*) FROM gallery_image WHERE width>0 $where")."</h3>";
 
-	print "<h3>Pending images = ".getOne("SELECT COUNT(*) FROM gallery_image WHERE width=0 $where")."</h3>";
+	print "<h3> (without votes) = ".getOne("SELECT COUNT(*) FROM gallery_image WHERE width>0 AND num < 2 $where")."</h3>";
 
 	print "<h3>Votes Cast = ".getOne("SELECT COUNT(*) FROM gallery_log WHERE final=1")."</h3>";
 
@@ -21,10 +22,10 @@ else
 
 	print "<h3>Suggestors = ".getOne("SELECT COUNT(DISTINCT session) FROM gallery_image WHERE width>0 $where")."</h3>";
 
-	print "<h3>Subscribers = ".getOne("SELECT COUNT(*) FROM gallery_email WHERE status > 0")."</h3>";
+	//print "<h3>Subscribers = ".getOne("SELECT COUNT(*) FROM gallery_email WHERE status > 0")."</h3>";
 
 	$intervals = array('24 hour','7 day','1 month');
-	$columns = array('created','updated','fetched','last_vote','showday','submitted','taken');
+	$columns = array('created','updated','fetched','first_vote','last_vote','submitted','taken');
 
 	print "<table>";
 	print "<tr><td></td>";
@@ -35,13 +36,17 @@ else
 	foreach ($columns as $column) {
 		print "<tr><th>$column</th>";
 		foreach ($intervals as $interval) {
-			print "<td>".getOne("SELECT COUNT(*) FROM gallery_image WHERE $column > DATE_SUB(NOW(), INTERVAL $interval)")."</td>";
+			print "<td align=right>".getOne("SELECT COUNT(*) FROM gallery_image WHERE $column > DATE_SUB(NOW(), INTERVAL $interval)")."</td>";
 		}
 	}
 	print "</table>";
-	print "(submitted to geograph, not the gallery)";
+	print "<p>('submitted' is to Geograph, 'created' is added to gallery (as pending). 'fetched' is when first becomes visible)</p>";
 
 print "</div>";
+
+if (empty($_GET['more']))
+	exit;
+
 print "<div style='float:left;width:290px'>";
 
 	print "<h3>Votes</h3>";
@@ -53,7 +58,7 @@ print "</div>";
 print "<div style='float:left;width:260px'>";
 
 	print "<h3>Updated</h3>";
-	
+
 	dump_sql_table("SELECT substring(updated,1,10) day,COUNT(*),count(*) as images FROM gallery_image where 1 $where GROUP BY substring(updated,1,10) DESC LIMIT 10");
 
 print "</div>";
