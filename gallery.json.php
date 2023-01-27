@@ -90,7 +90,7 @@ if (!empty($_GET['suggest'])) {
 		case 'weekly':  $where[] = "baysian > 3"; $where[] = "num_recent > 1"; $where[] = "num < 40";  $order = "avg_recent DESC"; break;
 		case 'daily':   $where[] = "showday is not null"; $order = "showday DESC"; break;
 		case 'unrated': $order = ($r%2 == 0)?'num asc, year(taken) desc':'num asc'; //$order = 'num asc';
-				$where[] = "num >= ".($r-1); //use  num >= $r, becauase so many unrated photos, num=1 never get a look in for example
+				$where[] = "num >= ".($r-2); //use  num >= $r, becauase so many unrated photos, num=1 never get a look in for example
 					//this should slow down rating brand new images, and move some older images though the ranks as well. 
 				$order .=",$RAND";
 				break;
@@ -127,7 +127,7 @@ if (!empty($_GET['suggest'])) {
 				}
 			}
 			break;
-		case 'ireland':	$where[] = "num > 3"; $where[] = "LENGTH(grid_reference) = 5"; $order = "baysian DESC"; break;
+		case 'ireland':	$where[] = "num > 2"; $where[] = "LENGTH(grid_reference) = 5"; $order = "baysian DESC"; break;
 
 		case 'hectad':
 			//already filtered to hectad
