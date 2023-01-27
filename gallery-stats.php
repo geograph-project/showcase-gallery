@@ -16,6 +16,8 @@ else
 
 	print "<h3> (without votes) = ".getOne("SELECT COUNT(*) FROM gallery_image WHERE width>0 AND num < 2 $where")."</h3>";
 
+	print "<h3> (Showcased) = ".getOne("SELECT COUNT(*) FROM gallery_image WHERE baysian > 3 $where")."</h3>";
+
 	print "<h3>Votes Cast = ".getOne("SELECT COUNT(*) FROM gallery_log WHERE final=1")."</h3>";
 
 	print "<h3>Voters = ".getOne("SELECT COUNT(DISTINCT session) FROM gallery_log WHERE final=1")."</h3>";
