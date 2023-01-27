@@ -11,7 +11,7 @@ include "includes/database.php";
 include "includes/functions.inc.php";
 
 switch (rand(1,20)) {
-	case 1: if (rand(1,10) > 3)
+	case 1: if (rand(1,10) > 1)
 			$rows = getAll("SELECT url,title FROM gallery_image WHERE title IS NULL ORDER BY RAND() DESC LIMIT 1");
 		break;
 	case 2: $rows = getAll("SELECT url,title FROM gallery_image WHERE title IS NULL ORDER BY LENGTH(url) DESC,url DESC LIMIT 1");
@@ -23,6 +23,13 @@ switch (rand(1,20)) {
 		break;
 
 	case 4:	$rows = getAll("(SELECT url,title FROM `gallery_image` WHERE title IS NULL ORDER BY LENGTH(url) DESC,url DESC LIMIT 30) ORDER BY RAND() LIMIT 1");
+		break;
+
+	case 5: $rows = getAll("(SELECT url,title FROM `gallery_image` WHERE title IS NULL ORDER BY created DESC LIMIT 300) ORDER BY RAND() LIMIT 1");
+		break;
+
+	case 16:
+	case 6: $rows = getAll("(SELECT url,title FROM `gallery_image` WHERE title IS NULL ORDER BY substring_index(url,'/',-1)+0 DESC LIMIT 100) ORDER BY RAND() LIMIT 1");
 		break;
 
 	case 13:
