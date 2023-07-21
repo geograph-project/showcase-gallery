@@ -324,7 +324,7 @@ function MakeLinks($posterText) {
                 return externalLink(array('href'=>$m[1],'text'=>'Link','nofollow'=>1,'title'=>$m[1]));
         }, $posterText);
 
-        $posterText = preg_replace_callback('/(?<![>\/F\.])(www\.[\w\.-]+\.\w{2,}\/?[\w\~\-\.\?\,=\'\/\\\+&%\$#\(\)\;\:\@\!]*)(?<!\.)(?!["\'])/', function($m) {
+        $posterText = preg_replace_callback('/(?<![>\/F\."\'])(www\.[\w\.-]+\.\w{2,}\/?[\w\~\-\.\?\,=\'\/\\\+&%\$#\(\)\;\:\@\!]*)(?<!\.)(?!["\'])/', function($m) {
                 return externalLink(array('href'=>"http://".$m[1],'text'=>'Link','nofollow'=>1,'title'=>$m[1]));
         }, $posterText);
 
