@@ -26,9 +26,9 @@
 		}
 
 if (!empty($_GET['daily'])) {
-	$cachepath = "cache-service/daily.$format.$extension";
+	$cachepath = "/tmp/daily.$format.$extension";
 } else {
-	$cachepath = "cache-service/spread.$format.$extension";
+	$cachepath = "/tmp/spread.$format.$extension";
 }
 
 include('includes/functions.inc.php');

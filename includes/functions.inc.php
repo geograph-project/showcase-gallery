@@ -32,26 +32,6 @@ function print_rp($q) {
 	print "</pre>";
 }
 
-
-function fetchFeed($url,$tim = 3600, $refresh = false) {
-
-	$cachepath = "cache-service/".md5($url).".cache";
-
-	if (empty($refresh) && file_exists($cachepath) && @filemtime($cachepath) > time() - $tim) {
-		$file = file_get_contents($cachepath);
-	} else {
-		if ($_GET['debug'])
-			print "FETCHING $url<hr/>";
-		$url = html_entity_decode($url);
-		$file = file_get_contents($url);
-
-		file_put_contents($cachepath,$file);
-	}
-	return $file;
-}
-
-
-
 ###############################################
 
 // the functions below, generally stoled from the main Geograph project.

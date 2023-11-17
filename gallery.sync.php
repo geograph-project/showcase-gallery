@@ -4,6 +4,7 @@
 	include "includes/database.php";
 	include "includes/mysql-config.inc.php";
 
+	ini_set("user_agent","Internal Request");
 	$str = file_get_contents("https://www.geograph.org.uk/stuff/gallery-list.php");
 
 	if (strpos($str,'mod:') === FALSE)

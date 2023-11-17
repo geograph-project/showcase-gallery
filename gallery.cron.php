@@ -53,7 +53,7 @@ ini_set('user_agent', 'Geograph ShowCase Bot +https://www.geograph.org.uk/contac
 if (!empty($rows))
 foreach ($rows as $row) {
 	if (preg_match('/geograph\.org\.uk\/photo\/(\d+)$/',$row['url'],$m)) {
-
+		ini_set("user_agent","Internal Request");
 		$data = file_get_contents("https://www.geograph.org.uk/api/Photo/{$m[1]}/geograph.org?output=json");
 
 		if (!empty($data)) {
