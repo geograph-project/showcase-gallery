@@ -443,7 +443,7 @@ function vote(v) {
 }
 function showMap(geo) {
 	bits = geo.split(/ /);
-	url = "https://maps.googleapis.com/maps/api/staticmap?markers=size:med|"+bits[0]+","+bits[1]+"&zoom=7&size=200x200&maptype=terrain&key=<? echo $CONF['maps_api_key']; ?>";
+	url = "https://t0.geograph.org.uk/tile-static.php?source=OSM&mlat="+bits[0]+"&mlon="+bits[1]+"&z=7&w=200&h=200";
 
 	document.images['map'].src= url;
 	document.getElementById("mapdiv").style.display = '';
