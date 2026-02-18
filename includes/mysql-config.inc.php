@@ -1,5 +1,10 @@
 <?php
 
+
+if (!empty($_SERVER['HTTP_CF_VISITOR']) && $_SERVER['HTTP_CF_VISITOR'] == '{"scheme":"https"}')
+      $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
+
+
 //the config file, is a nice central place to do this. But needs to only do for http requests.
 if (!empty($_SERVER['REMOTE_ADDR']) && $_SERVER['REQUEST_METHOD'] == 'GET') {
 	if (empty($_SERVER['HTTPS']) && (empty($_SERVER['HTTP_X_FORWARDED_PROTO']) || $_SERVER['HTTP_X_FORWARDED_PROTO'] != 'https')) {
@@ -9,8 +14,8 @@ if (!empty($_SERVER['REMOTE_ADDR']) && $_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 }
 
-
-//die("This site is offline for maintainance. Please check back after 7pm");
+//header("HTTP/1.0 503 Service Unavailable");
+//die("This site is offline for maintainance. Please check back after 1pm (BST)");
 
 //these are using enviroment variables, set in docker, you can put hardcoded values here
 $db_host = $_SERVER['CONF_DB_CONNECT'];
