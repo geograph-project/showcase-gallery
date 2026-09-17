@@ -865,9 +865,6 @@ class JSONCreator extends FeedCreator {
 			}
 		}
 
-		if (!function_exists('json_encode'))
-			require_once __DIR__.'/JSON.php';
-
 		if (isset($_GET['callback'])) {
 			$this->callback=preg_replace('/[^\w\.$]+/','',$_GET['callback']);
 			if (empty($this->callback)) {
@@ -1642,7 +1639,7 @@ class MBOXCreator extends FeedCreator {
 		$eol = "\r\n";
 		$escape = "=";
 		$output = "";
-		while( list(, $line) = each($lines) ) {
+		foreach($lines as $line) {
 			//$line = rtrim($line); // remove trailing white space -> no =20\r\n necessary
 			$linlen = strlen($line);
 			$newline = "";
